@@ -35,3 +35,11 @@ for epoch in range(epochs):
             example = Example.from_dict(doc, labels)
             nlp.update([example], sgd=optimizer, losses=losses)
     print(losses)
+
+message = input('- ')
+
+categories = nlp.get_pipe('textcat')
+scores = categories.predict(nlp.tokenizer(message))
+prediction = scores.argmax(axis=1)
+
+print(f'Prediction: {prediction} with a certainty of {int(max(scores)*100)}%')
