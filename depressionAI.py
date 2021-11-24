@@ -46,4 +46,4 @@ while message != '':
     prediction = categories.labels[scores.argmax()]
     prediction = ('❌😞 bad' if prediction=='suicide' else '✔️😊 good') + ' mental health'
 
-    print(f'Prediction: {prediction} with a certainty of {int(max(scores)*100)}%\n')
+    print(f'\nPrediction: {prediction} with a certainty of {int(max(scores)*100)}%\n\n')
