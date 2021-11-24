@@ -23,7 +23,7 @@ trainData = list(zip(trainX, trainY))
 random.seed(1)
 spacy.util.fix_random_seed(1)
 optimizer = nlp.begin_training()
-epochs = 10
+epochs = 5
 
 losses = {}
 for epoch in range(epochs):
@@ -36,11 +36,18 @@ for epoch in range(epochs):
             nlp.update([example], sgd=optimizer, losses=losses)
     print(losses)
 
-categories = nlp.get_pipe('textcat')
+f = open('model.pkl', 'wb')
+pickle.dump(nlp, f)
+f.close()
 
+f = open('model.pkl', 'rb')
+nlpModel = pickle.load(f)
+categories = nlpModel.get_pipe('textcat')
+
+message = ' '
 while message != '':
     message = input('- ')
-    docs = [nlp.tokenizer(message)]
+    docs = [nlpModel.tokenizer(message)]
 
     scores = categories.predict(docs)[0]
     prediction = categories.labels[scores.argmax()]
