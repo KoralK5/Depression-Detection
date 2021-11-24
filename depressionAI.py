@@ -37,9 +37,10 @@ for epoch in range(epochs):
     print(losses)
 
 message = input('- ')
+docs = [nlp.tokenizer(message)]
 
 categories = nlp.get_pipe('textcat')
-scores = categories.predict(nlp.tokenizer(message))
-prediction = scores.argmax(axis=1)
+scores = categories.predict(docs)[0]
+prediction = scores.argmax()
 
-print(f'Prediction: {prediction} with a certainty of {int(max(scores)*100)}%')
+print(f'Prediction: {categories.labels[prediction]} with a certainty of {int(max(scores)*100)}%')
