@@ -5,9 +5,10 @@ f = open('model.pkl', 'rb')
 nlpModel = pickle.load(f)
 categories = nlpModel.get_pipe('textcat')
 
-message = ' '
-while message != '':
+while True:
     message = input('- ')
+    if message == '': break
+
     docs = [nlpModel.tokenizer(message)]
 
     scores = categories.predict(docs)[0]
