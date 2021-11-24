@@ -36,11 +36,13 @@ for epoch in range(epochs):
             nlp.update([example], sgd=optimizer, losses=losses)
     print(losses)
 
-message = input('- ')
-docs = [nlp.tokenizer(message)]
-
 categories = nlp.get_pipe('textcat')
-scores = categories.predict(docs)[0]
-prediction = scores.argmax()
 
-print(f'Prediction: {categories.labels[prediction]} with a certainty of {int(max(scores)*100)}%')
+while message != '':
+    message = input('- ')
+    docs = [nlp.tokenizer(message)]
+
+    scores = categories.predict(docs)[0]
+    prediction = scores.argmax()
+
+    print(f'Prediction: {categories.labels[prediction]} with a certainty of {int(max(scores)*100)}%')
